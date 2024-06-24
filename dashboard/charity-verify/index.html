@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Charity</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <div class = "header">
+        <div class = "donationHarbourLogo"></div>
+        <h1>Donation Harbour</h1>
+    </div>
+
+    <h1>Verify Charity</h1>
+
+    <h2>Charity Verification Request</h2>
+    <form id="charityForm">
+        <!-- Charity Name -->
+        <label for="charityName">Charity Name (Legal Name):</label>
+        <input type="text" id="charityName" required><br>
+
+        <!-- Charity Registration Number -->
+        <label for="charityRegistrationNumber">Charity Registration Number (Tax-Exempt Number):</label>
+        <input type="text" id="charityRegistrationNumber" required><br>
+
+        <!-- Contact Information -->
+        <label for="contactInformation">Contact Information:</label>
+        <textarea id="contactInformation" rows="3" required></textarea><br>
+
+        <!-- Mission Statement -->
+        <label for="missionStatement">Mission Statement:</label>
+        <textarea id="missionStatement" rows="3" required></textarea><br>
+
+        <!-- Website URL -->
+        <label for="websiteURL">Website URL:</label>
+        <input type="url" id="websiteURL" required><br>
+
+        <!-- Proof of Non-Profit Status -->
+        <label for="proofNonProfitStatus">Proof of Non-Profit Status (Upload PDF or Image):</label>
+        <input type="file" id="proofNonProfitStatus" accept=".pdf, .jpg, .png" required><br>
+
+        <!-- Financial Information -->
+        <label for="financialInformation">Financial Information (Upload PDF):</label>
+        <input type="file" id="financialInformation" accept=".pdf" required><br>
+
+        <!-- Board Members and Leadership -->
+        <label for="leadership">Board Members and Leadership:</label>
+        <textarea id="leadership" rows="3" required></textarea><br>
+
+        <!-- Programs and Impact -->
+        <label for="programsImpact">Programs and Impact:</label>
+        <textarea id="programsImpact" rows="3" required></textarea><br>
+
+        <!-- Social Media Profiles -->
+        <label for="socialMediaProfiles">Social Media Profiles:</label>
+        <input type="url" id="socialMediaProfiles" required><br>
+
+        <!-- Documentation for Verification -->
+        <label for="verificationDocuments">Documentation for Verification (Upload PDF or Image):</label>
+        <input type="file" id="verificationDocuments" accept=".pdf, .jpg, .png" required><br>
+
+        <!-- Privacy Policy -->
+        <label for="privacyPolicy">Privacy Policy Agreement:</label>
+        <div class = "checkboxDiv">
+            <input type="checkbox" id="privacyPolicy" required> I agree to the privacy policy.<br>
+        </div>
+
+        <!-- Logo and Branding -->
+        <label for="logoBranding">Logo and Branding Materials (Upload Logo):</label>
+        <input type="file" id="logoBranding" accept=".png" required><br>
+
+        <!-- Verification Process -->
+        <label for="verificationProcess">Verification Process:</label>
+        <textarea id="verificationProcess" rows="3" required></textarea><br>
+
+        <!-- Terms and Conditions -->
+        <label for="termsConditions">Terms and Conditions Agreement:</label>
+        <div class = "checkboxDiv">
+            <input type="checkbox" id="termsConditions" required> I agree to the terms and conditions.<br>
+        </div>
+
+
+        <!-- Expiration and Renewal -->
+        <label for="expirationRenewal">Expiration and Renewal Process:</label>
+        <textarea id="expirationRenewal" rows="3" required></textarea><br>
+
+        <!-- Support and Assistance -->
+        <label for="supportContact">Support and Assistance:</label>
+        <input type="text" id="supportContact" required><br>
+
+        <!-- Disclaimers -->
+        <label for="disclaimers">Disclaimers:</label>
+        <textarea id="disclaimers" rows="3" required></textarea><br>
+
+        <button type="submit">Submit Request</button>
+    </form>
+
+    <!-- Processing Message -->
+    <p class="processing-message" id="processingMessage" style="display: none;">We're processing your request. Check back later in 2 days.</p>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
+
+<!-- Your custom JavaScript -->
+<script src="index.js"></script>
+</body>
+</html>
