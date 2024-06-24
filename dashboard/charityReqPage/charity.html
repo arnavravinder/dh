@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charity Item Request</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="charity.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body>
+    <div class = "blueBox"></div>
+    <div class = "darkBlueBox"></div>
+    <div class="container">
+        <h1>Charity Item Request</h1>
+
+        <form id="itemRequestForm">
+            <div class="flex-row" style="margin-top: auto;">
+                <select id="item-type" name="item-type" class="item-type-select">
+                    <option value="" disabled selected hidden>Item Type...</option>
+                    <option value="books">Books</option>
+                    <option value="clothing">Clothing</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="others">Others</option>
+                </select>
+                <input type="number" id="quantityRequested" placeholder="Quantity Requested..." required><br>
+            </div>
+            <div class="flex-row">
+                <input type="text" id="desiredDeliveryDate" placeholder="Desired Delivery Date..." required><br>
+            </div>
+            <button type="submit">Submit Request</button>
+        </form>
+    </div>
+    <div class="miniChatWidget">
+        <div class="chatWidgetHeader">
+            <h2>Chat</h2>
+            <i style="margin-left: 10px;" class="fa-solid fa-comment"></i>
+            <button id="chooseNameButton">Choose Name</button>
+            <i class="fa-solid fa-chevron-down minimize-chat"></i>
+        </div>
+        <div class="miniChatWidgetContent">
+            <div id="chat-messages" class="chat-messages"></div>
+            <div class="input-container">
+                <input type="text" id="message-input" placeholder="Type your message...">
+                <button id="send-button"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase JavaScript SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+    <script src = "charity.js"></script>
+
+    <script>
+        const firebaseConfig = {
+//hidden
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1); 
+
+        flatpickr("#desiredDeliveryDate", {
+            dateFormat: "d-m-Y",
+            enableTime: false,
+            minDate: tomorrow
+
+        });
+
+        document.getElementById("itemRequestForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const itemTypeSelect = document.getElementById("item-type");
+            const selectedItemType = itemTypeSelect.value;
+            console.log("Selected Item Type: " + selectedItemType);
+            const quantityRequested = document.getElementById("quantityRequested").value;
+            const desiredDeliveryDate = document.getElementById("desiredDeliveryDate").value;
+
+            const database = firebase.database();
+
+            const newItemRequest = {
+                itemType: selectedItemType,
+                quantityRequested: quantityRequested,
+                desiredDeliveryDate: desiredDeliveryDate,
+            };
+
+            database.ref("requestedItems").push(newItemRequest)
+                .then(() => {
+                    alert("Item request submitted successfully!");
+                    document.getElementById("itemRequestForm").reset();
+                })
+                .catch((error) => {
+                    console.error("Error submitting item request:", error);
+                });
+        });
+const chatId = `Chat${Math.floor(Math.random() * 10000)}`;
+
+const database = firebase.database();
+const chatRef = database.ref(`chats/${chatId}`);
+
+document.getElementById("send-button").addEventListener("click", function () {
+    const messageInput = document.getElementById("message-input");
+    const messageText = messageInput.value;
+
+    const sender = "charity"; 
+    const message = {
+        sender: sender,
+        text: messageText,
+        timestamp: firebase.database.ServerValue.TIMESTAMP,
+    };
+
+    chatRef.child("messages").push(message);
+
+    messageInput.value = "";
+});
+
+chatRef.child("messages").on("child_added", function (snapshot) {
+    const message = snapshot.val();
+    const chatMessages = document.getElementById("chat-messages");
+
+    const messageElement = document.createElement("div");
+    messageElement.textContent = `[${message.sender}] ${message.text}`;
+    chatMessages.appendChild(messageElement);
+});
+
+    </script>
+</body>
+</html>
