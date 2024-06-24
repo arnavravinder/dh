@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel = "stylesheet" href = "admin-dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+    </header>
+
+    <main>
+        <div class="sidebar">
+            <a class = "sidebar-item" href="admin-dashboard.html">Dashboard</a>
+            <a class = "sidebar-item" href="c-verify.html">Charity Verification</a>
+            <a class = "sidebar-item" href="#">Charity Chat</a>
+        </div>
+    
+        <div class="main-content">
+            <h1>Welcome, Admin!</h1>
+            <div class = "adminInbox">
+                <h1 class = "PendingReqHeader">Pending Requests</h1>
+                <div class="card">
+                    <div class = "cardText">
+                        <h3>Charity Approval</h3>
+                        <p>You have pending charity applications for review.</p>
+                    </div>
+                    <a class = "reviewNowLink" href="#">Review Now</a>
+                </div>
+                <div class="card">
+                    <div class = "cardText">
+                        <h3>Charity Approval</h3>
+                        <p>You have pending charity applications for review.</p>
+                    </div>
+                    <a class = "reviewNowLink" href="#">Review Now</a>
+                </div>
+                <div class="card">
+                    <div class = "cardText">
+                        <h3>Charity Approval</h3>
+                        <p>You have pending charity applications for review.</p>
+                    </div>
+                    <a class = "reviewNowLink" href="#">Review Now</a>
+                </div>
+                <div class="card">
+                    <div class = "cardText">
+                        <h3>Charity Approval</h3>
+                        <p>You have pending charity applications for review.</p>
+                    </div>
+                    <a class = "reviewNowLink" href="#">Review Now</a>
+                </div>
+                <div class="card">
+                    <div class = "cardText">
+                        <h3>Charity Approval</h3>
+                        <p>You have pending charity applications for review.</p>
+                    </div>
+                    <a class = "reviewNowLink" href="#">Review Now</a>
+                </div>
+                <div class="card">
+                    <div class = "cardText">
+                        <h3>Charity Approval</h3>
+                        <p>You have pending charity applications for review.</p>
+                    </div>
+                    <a class = "reviewNowLink" href="#">Review Now</a>
+                </div>
+            </div>
+            <br>
+            <h1>Chats with Charities</h1>
+            <div class = "chat-container">
+
+            </div>
+        </div>
+    </main>
+
+    <script src = "admin-dashboard.js"></script>
+</body>
+</html>

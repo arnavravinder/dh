@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charity Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .charity-request {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .verify-button, .deny-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Charity Verification Requests</h1>
+    <div id="charityRequests"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+
+    <script>
+        var firebaseConfig = {
+//hidden
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        var databaseRef = firebase.database().ref("charityRequests");
+
+        function loadCharityRequests() {
+            databaseRef.on("value", function(snapshot) {
+                var charityRequestsContainer = document.getElementById("charityRequests");
+                charityRequestsContainer.innerHTML = "";
+
+                snapshot.forEach(function(childSnapshot) {
+                    var data = childSnapshot.val();
+
+                    if (data.verified === true) {
+                        return;
+                    }
+
+                    var charityRequest = document.createElement("div");
+                    charityRequest.classList.add("charity-request");
+
+                    var charityInfo = document.createElement("div");
+                    charityInfo.classList.add("charity-info");
+
+                    var title = document.createElement("h2");
+                    title.textContent = data.charityName;
+                    charityInfo.appendChild(title);
+
+                    var fields = ["charityRegistrationNumber", "contactInformation", "missionStatement", "websiteURL", "leadership", "programsImpact", "socialMediaProfiles", "privacyPolicy", "verificationProcess", "termsConditions", "expirationRenewal", "supportContact", "disclaimers"];
+
+                    fields.forEach(function(field) {
+                        var label = document.createElement("label");
+                        label.textContent = field + ":";
+                        var value = document.createElement("p");
+                        value.textContent = data[field];
+                        charityInfo.appendChild(label);
+                        charityInfo.appendChild(value);
+                    });
+
+                    charityRequest.appendChild(charityInfo);
+
+                    var verifyButton = document.createElement("button");
+                    verifyButton.textContent = "Verify";
+                    verifyButton.classList.add("verify-button");
+                    verifyButton.addEventListener("click", function() {
+                        childSnapshot.ref.update({ verified: true });
+
+                        loadCharityRequests();
+                        alert("verify success")
+                    });
+
+                    charityRequest.appendChild(verifyButton);
+
+                    var denyButton = document.createElement("button");
+denyButton.textContent = "Deny";
+denyButton.classList.add("deny-button");
+denyButton.addEventListener("click", function() {
+    childSnapshot.ref.remove()
+        .then(function() {
+            loadCharityRequests();
+            alert("denied")
+        })
+        .catch(function(error) {
+            console.error("Error deleting charity request:", error);
+        });
+});
+
+                    charityRequest.appendChild(denyButton);
+
+                    charityRequestsContainer.appendChild(charityRequest);
+                });
+            });
+        }
+
+        loadCharityRequests();
+    </script>
+</body>
+</html>
